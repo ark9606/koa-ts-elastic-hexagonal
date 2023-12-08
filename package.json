@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "node -r ts-node/register --env-file=.env src/main.ts",
+    "start-web:dev": "node -r ts-node/register --env-file=.env src/main.ts",
+    "start-cli:dev": "node -r ts-node/register --env-file=.env src/adapters/in/cli",
     "typeorm": "typeorm-ts-node-commonjs",
-    "typeorm:migrate": "npm run typeorm migration:run -- -d src/data-source.ts"
+    "typeorm:migrate": "npm run typeorm migration:run -- -d src/config/db/data-source.ts"
   },
   "engines": {
     "node": ">=20.0.0"
@@ -16,6 +17,7 @@
   "dependencies": {
     "dotenv": "^16.3.1",
     "inversify": "^6.0.2",
+    "inversify-koa-utils": "^1.0.0",
     "koa": "^2.14.2",
     "koa-bodyparser": "^4.4.1",
     "koa-json": "^2.0.2",
