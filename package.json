@@ -2,7 +2,7 @@
   "name": "koa-ts-elastic-hexagonal",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/main.ts",
   "scripts": {
     "start-web:dev": "node -r ts-node/register --env-file=.env src/main.ts",
     "start-cli:dev": "node -r ts-node/register --env-file=.env src/adapters/in/cli",

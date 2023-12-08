@@ -7,4 +7,4 @@ yarn install
 
 
 Generate migrations
-npm run typeorm migration:generate ./migrations/Name -- -d src/data-source.t
+npm run typeorm migration:generate ./migrations/Name -- -d src/config/db/data-source.ts
