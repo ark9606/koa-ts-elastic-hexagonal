@@ -1,4 +1,4 @@
-import {controller, httpGet, interfaces} from "inversify-koa-utils";
+import {controller, httpGet, httpPost, interfaces} from "inversify-koa-utils";
 import {inject, injectable} from "inversify";
 import {DI_TOKEN} from "../../../../config/injections/di-tokens";
 import {GetAuthorsListPort} from "../../../../core/author/port/GetAuthorsListPort";
@@ -17,5 +17,10 @@ export class AuthorController implements interfaces.Controller {
   @httpGet('/')
   async getAll() {
     return this.getAuthorsUseCase.get();
+  }
+
+  @httpPost('/articles')
+  async createArticle() {
+    return {};
   }
 }
