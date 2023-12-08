@@ -1,8 +1,10 @@
-import {controller, httpGet, httpPost, interfaces} from "inversify-koa-utils";
+import {controller, httpGet, httpPost, interfaces, requestBody, requestParam} from "inversify-koa-utils";
 import {inject, injectable} from "inversify";
 import {DI_TOKEN} from "../../../../config/injections/di-tokens";
 import {GetAuthorsListPort} from "../../../../core/author/port/GetAuthorsListPort";
 import "reflect-metadata";
+import * as Koa from 'koa';
+import {CreateStoryByAuthorPort} from "../../../../core/author/port/CreateStoryByAuthorPort";
 
 @controller('/authors')
 @injectable()
@@ -10,17 +12,19 @@ export class AuthorController implements interfaces.Controller {
 
   constructor(
     @inject(DI_TOKEN.GetAuthorsListUseCase)
-    private getAuthorsUseCase: GetAuthorsListPort,
+    private getAuthorsListPort: GetAuthorsListPort,
+    @inject(DI_TOKEN.CreateStoryByAuthorUseCase)
+    private createStoryByAuthorPort: CreateStoryByAuthorPort,
   ) {
   }
 
   @httpGet('/')
   async getAll() {
-    return this.getAuthorsUseCase.get();
+    return this.getAuthorsListPort.get();
   }
 
-  @httpPost('/articles')
-  async createArticle() {
-    return {};
+  @httpPost('/:id/stories')
+  async createStory(@requestBody() body, @requestParam("id") authorId: string) {
+    return this.createStoryByAuthorPort.create(body, authorId);
   }
 }

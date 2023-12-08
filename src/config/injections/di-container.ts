@@ -9,6 +9,8 @@ import {DBAdapter} from "../../adapters/out/persistence/DBAdapter";
 import {StoryService} from "../../core/story/app/services/StoryService";
 import {StoryServicePort} from "../../core/story/port/StoryServicePort";
 import {StoryController} from "../../adapters/in/api/controllers/StoryController";
+import {CreateStoryByAuthorUseCase} from "../../core/author/app/useCases/CreateStoryByAuthorUseCase";
+import {CreateStoryByAuthorPort} from "../../core/author/port/CreateStoryByAuthorPort";
 
 export const container = new Container();
 
@@ -18,6 +20,7 @@ container.bind<interfaces.Controller>(TYPE.Controller).to(StoryController).whenT
 
 // custom providers
 container.bind<GetAuthorsListPort>(DI_TOKEN.GetAuthorsListUseCase).to(GetAuthorsListUseCase);
+container.bind<CreateStoryByAuthorPort>(DI_TOKEN.CreateStoryByAuthorUseCase).to(CreateStoryByAuthorUseCase);
 container.bind<StoryServicePort>(DI_TOKEN.StoryService).to(StoryService);
 container.bind<DBPort>(DI_TOKEN.DBAdapter).to(DBAdapter);
 

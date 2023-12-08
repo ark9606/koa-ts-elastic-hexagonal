@@ -8,7 +8,6 @@ export class GetAuthorsListUseCase implements GetAuthorsListPort {
   constructor(
     @inject(DI_TOKEN.DBAdapter) private dbAdapter: DBPort,
   ) {
-    console.debug('>> init GetAuthorsListUseCase');
   }
 
   async get(): Promise<GetAuthorsListOutput[]> {
