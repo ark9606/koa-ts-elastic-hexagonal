@@ -18,16 +18,11 @@ export class CreateStoryByAuthorUseCase implements CreateStoryByAuthorPort {
     photoUrl: string;
     category: string;
   }, authorId: string): Promise<CreateStoryByAuthorOutput> {
-    const author = (await this.dbAdapter.getAuthorRepository()).findOne({
-      where: {
-        id: authorId,
-      }
-    });
+    const author = await this.dbAdapter.getAuthorById(authorId);
     if (!author) {
       // todo create result class
       return {error: 'Author not found'} as any;
     }
-    // todo make author as model and call author.createStory()
-    return author as any;
+    return author.writeArticle(storyDTO);
   }
 }
