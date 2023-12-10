@@ -11,6 +11,8 @@ import {StoryServicePort} from "../../core/story/port/StoryServicePort";
 import {StoryController} from "../../adapters/in/api/controllers/StoryController";
 import {CreateStoryByAuthorUseCase} from "../../core/author/app/useCases/CreateStoryByAuthorUseCase";
 import {CreateStoryByAuthorPort} from "../../core/author/port/CreateStoryByAuthorPort";
+import {ElasticPort} from "../../core/ports/ElasticPort";
+import {ElasticAdapter} from "../../adapters/out/persistence/ElasticAdapter";
 
 export const container = new Container();
 
@@ -23,4 +25,5 @@ container.bind<GetAuthorsListPort>(DI_TOKEN.GetAuthorsListUseCase).to(GetAuthors
 container.bind<CreateStoryByAuthorPort>(DI_TOKEN.CreateStoryByAuthorUseCase).to(CreateStoryByAuthorUseCase);
 container.bind<StoryServicePort>(DI_TOKEN.StoryService).to(StoryService);
 container.bind<DBPort>(DI_TOKEN.DBAdapter).to(DBAdapter);
+container.bind<ElasticPort>(DI_TOKEN.ElasticAdapter).to(ElasticAdapter);
 

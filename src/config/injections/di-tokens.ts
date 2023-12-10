@@ -5,4 +5,5 @@ export const DI_TOKEN = {
   CreateStoryByAuthorUseCase: Symbol.for("CreateStoryByAuthorUseCase"),
   StoryService: Symbol.for("StoryService"),
   DBAdapter: Symbol.for("DBAdapter"),
+  ElasticAdapter: Symbol.for("ElasticAdapter"),
 };

@@ -1,13 +1,14 @@
-import {GetAuthorsListOutput, GetAuthorsListPort} from "../../port/GetAuthorsListPort";
 import {inject, injectable} from "inversify";
 import {DI_TOKEN} from "../../../../config/injections/di-tokens";
 import {DBPort} from "../../../ports/DBPort";
 import {CreateStoryByAuthorOutput, CreateStoryByAuthorPort} from "../../port/CreateStoryByAuthorPort";
+import {ElasticPort} from "../../../ports/ElasticPort";
 
 @injectable()
 export class CreateStoryByAuthorUseCase implements CreateStoryByAuthorPort {
   constructor(
     @inject(DI_TOKEN.DBAdapter) private dbAdapter: DBPort,
+    @inject(DI_TOKEN.ElasticAdapter) private elasticPort: ElasticPort,
   ) {
   }
 
@@ -23,6 +24,12 @@ export class CreateStoryByAuthorUseCase implements CreateStoryByAuthorPort {
       // todo create result class
       return {error: 'Author not found'} as any;
     }
-    return author.writeArticle(storyDTO);
+    const story = await author.writeStory(storyDTO);
+    setImmediate(async () => {
+      await this.elasticPort.putStory(story);
+    });
+    // todo create CLI for generate stories
+    // todo create endpoint for searching
+    return story;
   }
 }

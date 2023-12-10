@@ -11,7 +11,7 @@ export class AuthorModel extends AuthorEntity {
     return this.firstName + ' ' + this.lastName;
   }
 
-  async writeArticle(storyDTO: {
+  async writeStory(storyDTO: {
     title: string
     description: string
     fullText: string;
