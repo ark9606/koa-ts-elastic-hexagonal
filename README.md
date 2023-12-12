@@ -11,3 +11,7 @@ npm run typeorm migration:generate ./migrations/Name -- -d src/config/db/data-so
 
 
 docker compose up -d
+
+
+Generate authors with CLI:
+yarn run start-cli:dev --entity=author --count=3

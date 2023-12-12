@@ -21,8 +21,7 @@ export class CreateStoryByAuthorUseCase implements CreateStoryByAuthorPort {
   }, authorId: string): Promise<CreateStoryByAuthorOutput> {
     const author = await this.dbAdapter.getAuthorById(authorId);
     if (!author) {
-      // todo create result class
-      return {error: 'Author not found'} as any;
+      throw new Error('Author not found');
     }
     const story = await author.writeStory(storyDTO);
     setImmediate(async () => {
