@@ -25,7 +25,7 @@ export class CreateStoryByAuthorUseCase implements CreateStoryByAuthorPort {
     }
     const story = await author.writeStory(storyDTO);
     setImmediate(async () => {
-      await this.elasticPort.putStory(story);
+      await this.elasticPort.putStories([story]);
     });
     // todo create CLI for generate stories
     // todo create endpoint for searching

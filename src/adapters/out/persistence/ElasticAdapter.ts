@@ -17,9 +17,9 @@ export class ElasticAdapter implements ElasticPort {
       // }
     });
   }
-  public async putStory(story: StoryEntity): Promise<void> {
+  public async putStories(stories: StoryEntity[]): Promise<void> {
     const res = await this.client.helpers.bulk({
-      datasource: [{...story}],
+      datasource: stories,
       onDocument: (doc) => ({ index: { _index: 'stories' }}),
     });
     console.log(res);

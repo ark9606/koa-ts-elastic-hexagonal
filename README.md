@@ -15,3 +15,6 @@ docker compose up -d
 
 Generate authors with CLI:
 yarn run start-cli:dev --entity=author --count=3
+
+Generate stories for all authors with CLI:
+yarn run start-cli:dev --entity=story
