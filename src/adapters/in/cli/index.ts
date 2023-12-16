@@ -12,7 +12,10 @@ import {In} from "typeorm";
 import {chunkify} from "../../../core/common/utils/chunkify";
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
-const argv = yargs(hideBin(process.argv)).argv
+import * as fs from 'fs';
+import * as path from "path";
+import * as readline from "readline";
+const argv = yargs(hideBin(process.argv)).argv;
 
 console.log('CLI adapter started');
 
@@ -45,15 +48,54 @@ container.bind<ElasticPort>(DI_TOKEN.ElasticAdapter).to(ElasticAdapter);
     await generateAuthors(generateCount)
   }
   else if (generateStoriesMode) {
-    const authors = await getAllAuthors();
-    const chunks = chunkify(authors, 50);
-    let generated = 0;
-    for (const chunk of chunks) {
-      generated += await generateStoriesForAuthors(chunk);
-    }
-    console.log('Created stories:', generated);
+    const dbAdapter = container.get<DBPort>(DI_TOKEN.DBAdapter);
+    const elasticAdapter = container.get<ElasticPort>(DI_TOKEN.ElasticAdapter);
+
+    const authors = await getAllAuthors()
+
+    const read = fs.createReadStream(path.join(__dirname, '..', '..', '..', '..', 'news_dataset.json'));
+    const rl = readline.createInterface({
+      input: read,
+    });
+    let authorPointer = 0;
+    const stories = [];
+    rl.on('line', async (line) => {
+      if (authorPointer >= authors.length - 1) {
+        authorPointer = 0;
+      }
+      const object = JSON.parse(line);
+      const entity = new StoryEntity();
+      entity.title = object.headline;
+      entity.description = object.short_description;
+      entity.fullText = faker.lorem.paragraph(2) + object.short_description + faker.lorem.paragraph(2);
+      entity.photoUrl = faker.image.avatar();
+      entity.authorId = authors[authorPointer++].id;
+      entity.category = object.category;
+      entity.liked = faker.number.int({ min: 50, max: 1000 });
+      entity.createdAt = faker.date.past({refDate: new Date()});
+      stories.push(entity);
+
+    });
+
+    rl.on('close', async () => {
+      const repo = await dbAdapter.getStoryRepository();
+      const chunks = chunkify(stories, 5000);
+      let generated = 0;
+      for (const chunk of chunks) {
+        const res = await repo.insert(chunk);
+        generated += res?.identifiers?.length;
+
+        const entities = await repo.find({
+          where: {
+            id: In(res?.identifiers.map(({id}) => id)),
+          }
+        });
+        await elasticAdapter.putStories(entities);
+      }
+      console.log('Stories added to DB and Elastic')
+      await (await getDataSource()).destroy();
+    });
   }
-  await (await getDataSource()).destroy();
 
 })();
 
@@ -85,6 +127,7 @@ async function generateStoriesForAuthors(authors: AuthorEntity[]): Promise<numbe
   const elasticAdapter = container.get<ElasticPort>(DI_TOKEN.ElasticAdapter);
 
   const stories: StoryEntity[] = [];
+
   authors.forEach(author => {
     const storiesCount = faker.number.int({ min: 250, max: 400 });
     for (let i = 0; i < storiesCount; i++) {
@@ -96,7 +139,7 @@ async function generateStoriesForAuthors(authors: AuthorEntity[]): Promise<numbe
       entity.authorId = author.id;
       entity.category = STORIES_CATEGORIES[faker.number.int({min: 0, max: STORIES_CATEGORIES.length - 1})]
       entity.liked = faker.number.int({ min: 50, max: 1000 });
-      entity.createdAt = faker.date.past({refDate: new Date()})
+      entity.createdAt = faker.date.past({refDate: new Date()});
       stories.push(entity);
     }
   });

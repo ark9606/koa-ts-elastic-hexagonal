@@ -1,16 +1,24 @@
 import {inject, injectable} from "inversify";
 import {DI_TOKEN} from "../../../../config/injections/di-tokens";
 import {DBPort} from "../../../ports/DBPort";
-import {GetStoriesListInput, GetStoriesListOutput, GetStoryOutput, StoryServicePort} from "../../port/StoryServicePort";
+import {
+  GetStoriesListInput,
+  GetStoriesListOutput,
+  GetStoryOutput,
+  SearchStoriesInput,
+  StoryServicePort
+} from "../../port/StoryServicePort";
 import {FindOptionsWhere} from "typeorm/find-options/FindOptionsWhere";
 import {StoryEntity} from "../../Story.entity";
 import {Like} from "typeorm";
+import {ElasticPort} from "../../../ports/ElasticPort";
 
 @injectable()
 export class StoryService implements StoryServicePort {
 
   constructor(
     @inject(DI_TOKEN.DBAdapter) private dbAdapter: DBPort,
+    @inject(DI_TOKEN.ElasticAdapter) private elasticPort: ElasticPort,
   ) {
   }
 
@@ -42,6 +50,19 @@ export class StoryService implements StoryServicePort {
         fullText: story.fullText,
       })),
     }
+  }
+
+
+  public async searchStories(input: SearchStoriesInput): Promise<{
+    count: number;
+    items: GetStoriesListOutput[];
+  }> {
+    const res = await this.elasticPort.searchStories({
+      search: input.search,
+      take: input.take,
+      skip: input.skip
+    })
+    return res as any;
   }
 
 

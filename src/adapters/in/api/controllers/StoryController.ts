@@ -32,6 +32,19 @@ export class StoryController implements interfaces.Controller {
     });
   }
 
+  @httpGet('/search')
+  async searchStories(
+    @queryParam('search') search: string,
+    @queryParam('take') take: string,
+    @queryParam('skip') skip: string,
+  ) {
+    return this.storyServicePort.searchStories({
+      search,
+      take: Number.isSafeInteger(+take) ? +take : 50,
+      skip: Number.isSafeInteger(+skip) ? +skip : 0,
+    });
+  }
+
   @httpGet('/:id')
   async getOneById(@requestParam("id") id: string) {
     return this.storyServicePort.getOne(id);
