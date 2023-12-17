@@ -10,7 +10,7 @@ import {
 } from "../../port/StoryServicePort";
 import {FindOptionsWhere} from "typeorm/find-options/FindOptionsWhere";
 import {StoryEntity} from "../../Story.entity";
-import {Like} from "typeorm";
+import {ILike, Like} from "typeorm";
 import {ElasticPort} from "../../../ports/ElasticPort";
 
 @injectable()
@@ -26,21 +26,28 @@ export class StoryService implements StoryServicePort {
     count: number;
     items: GetStoriesListOutput[];
   }> {
-    const where: FindOptionsWhere<StoryEntity> = {};
-    if (typeof input?.title === 'string' && input.title.length > 0) {
-      where.title = Like(`%${input.title}%`);
+    const where: FindOptionsWhere<StoryEntity>[] = [];
+    if (typeof input?.filter === 'string' && input.filter.length > 0) {
+      where.push({title: ILike(`%${input.filter}%`)});
+      where.push({description: ILike(`%${input.filter}%`)});
+      where.push({fullText: ILike(`%${input.filter}%`)});
     }
-    if (typeof input?.description === 'string' && input.description.length > 0) {
-      where.description = Like(`%${input.description}%`);
+    const qb = (await this.dbAdapter.getStoryRepository())
+      .createQueryBuilder('story')
+      .select('story');
+
+    if (typeof input?.filter === 'string' && input.filter.length > 0) {
+      const formattedFilter = input.filter.trim().replace(/ /g, ' & ');
+      qb.where("to_tsvector('simple', story.title) @@ to_tsquery('simple', :query)",
+        { query: `${formattedFilter}:*` });
     }
-    if (typeof input?.fullText === 'string' && input.fullText.length > 0) {
-      where.fullText = Like(`%${input.fullText}%`);
-    }
-    const [stories, count] = await (await this.dbAdapter.getStoryRepository()).findAndCount({
-      where,
-      skip: input.skip,
-      take: input.take,
-    });
+
+    const [stories, count] = await qb.limit(input.take).offset(input.skip).getManyAndCount();
+    // const [stories, count] = await (await this.dbAdapter.getStoryRepository()).findAndCount({
+    //   where,
+    //   skip: input.skip,
+    //   take: input.take,
+    // });
     return {
       count,
       items: stories.map(story => ({

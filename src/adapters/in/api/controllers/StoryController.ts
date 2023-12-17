@@ -17,20 +17,18 @@ export class StoryController implements interfaces.Controller {
 
   @httpGet('/')
   async getAll(
-    @queryParam('title') title: string,
-    @queryParam('description') description: string,
-    @queryParam('fullText') fullText: string,
+    @queryParam('filter') filter: string,
     @queryParam('take') take: string,
     @queryParam('skip') skip: string,
   ) {
     return this.storyServicePort.getList({
-      title,
-      description,
-      fullText,
+      filter,
       take: Number.isSafeInteger(+take) ? +take : 50,
       skip: Number.isSafeInteger(+skip) ? +skip : 0,
     });
   }
+
+  // todo create several endpoint for aggs from ELASTIC
 
   @httpGet('/search')
   async searchStories(

@@ -1,9 +1,7 @@
 import {StoryEntity} from "../Story.entity";
 
 export type GetStoriesListInput = {
-  title: string | undefined;
-  description: string | undefined;
-  fullText: string | undefined;
+  filter: string | undefined;
   take: number;
   skip: number;
 };
