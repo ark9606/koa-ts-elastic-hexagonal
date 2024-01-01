@@ -82,10 +82,18 @@ export class StoryService implements StoryServicePort {
     return storyEntity;
   }
 
-  public async getStatistics(): Promise<{ topCategories: {category: string; stories: number}[] }> {
+  public async getStatistics(): Promise<{
+    topCategories: {category: string; stories: number}[];
+    popularInPolitics: string[];
+    storiesByMonths: { month: string, count: number }[];
+  }> {
     const res = await this.elasticPort.getTopCategories(5);
+    const popularInPolitics = await this.elasticPort.popularInCategory('POLITICS');
+    const monthStories = await this.elasticPort.storiesByMonths();
     return {
       topCategories: res.map(item => ({category: item.key, stories: item.doc_count})),
+      popularInPolitics: popularInPolitics.map(item => item.key),
+      storiesByMonths: monthStories.map(item => ({month: item.key_as_string, count: item.doc_count})),
     };
   }
 

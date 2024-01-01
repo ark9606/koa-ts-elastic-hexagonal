@@ -139,6 +139,48 @@ export class ElasticAdapter implements ElasticPort {
     return (agg as any)?.buckets;
   }
 
+  public async popularInCategory(category: string): Promise<any> {
+    const res = await this.client.search({
+      index: this.storiesIndex,
+      size: 0,
+      query: {
+        match: {
+          category: category,
+        }
+      },
+      aggs: {
+        popular_in_category: {
+          significant_text: {
+            field: "title",
+          }
+        }
+      }
+    })
+    const agg = res?.aggregations?.popular_in_category;
+    return (agg as any)?.buckets;
+  }
+
+  public async storiesByMonths(): Promise<any> {
+    const res = await this.client.search({
+      index: this.storiesIndex,
+      size: 0,
+      aggs: {
+        stories_by_months: {
+          date_histogram: {
+            field: "createdAt",
+            calendar_interval: "1M",
+            order: {
+              _count: "desc"
+            }
+          }
+        }
+      }
+    })
+    const agg = res?.aggregations?.stories_by_months;
+    return (agg as any)?.buckets;
+  }
+
+
 
 
 

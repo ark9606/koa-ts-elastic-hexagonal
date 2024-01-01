@@ -11,4 +11,6 @@ export interface ElasticPort {
   putStories(stories: StoryEntity[]): Promise<void>;
   searchStories(params: SearchStoriesInput): Promise<{id: string }[]>;
   getTopCategories(count: number): Promise<any>;
+  popularInCategory(category: string): Promise<any>;
+  storiesByMonths(): Promise<any>;
 }
