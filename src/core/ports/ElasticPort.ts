@@ -10,4 +10,5 @@ export interface ElasticPort {
   createIndex(): Promise<void>;
   putStories(stories: StoryEntity[]): Promise<void>;
   searchStories(params: SearchStoriesInput): Promise<{id: string }[]>;
+  getTopCategories(count: number): Promise<any>;
 }

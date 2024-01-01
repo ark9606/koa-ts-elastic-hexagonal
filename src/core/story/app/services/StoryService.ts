@@ -82,6 +82,14 @@ export class StoryService implements StoryServicePort {
     return storyEntity;
   }
 
+  public async getStatistics(): Promise<{ topCategories: {category: string; stories: number}[] }> {
+    const res = await this.elasticPort.getTopCategories(5);
+    return {
+      topCategories: res.map(item => ({category: item.key, stories: item.doc_count})),
+    };
+  }
+
+
 
 
 }

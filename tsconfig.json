@@ -7,9 +7,10 @@
     "outDir": "./dist",
     "types": ["reflect-metadata", "node"],
     "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true
   },
-  "exclude": [
-    "node_modules"
+  "include": [
+    "./src/**/*"
   ]
 }

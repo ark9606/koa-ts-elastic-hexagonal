@@ -122,6 +122,24 @@ export class ElasticAdapter implements ElasticPort {
     return res as any;
   }
 
+  public async getTopCategories(count: number): Promise<any> {
+    const res = await this.client.search({
+      index: this.storiesIndex,
+      size: 0,
+      aggs: {
+        by_category: {
+          terms: {
+            field: "category",
+            size: count
+          }
+        }
+      }
+    })
+    const agg = res?.aggregations?.by_category;
+    return (agg as any)?.buckets;
+  }
+
+
 
 
 

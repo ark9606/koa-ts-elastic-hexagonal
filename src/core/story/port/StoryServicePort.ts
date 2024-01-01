@@ -25,4 +25,6 @@ export interface StoryServicePort {
     items: GetStoriesListOutput[];
   }>;
   getOne(id: string): Promise<GetStoryOutput>;
+
+  getStatistics(): Promise<{ topCategories: {category: string; stories: number}[] }>;
 }

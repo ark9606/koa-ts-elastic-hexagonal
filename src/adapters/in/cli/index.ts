@@ -69,7 +69,7 @@ async function seedStories(): Promise<void> {
 
   const authors = await getAllAuthors();
 
-  const read = fs.createReadStream(path.join(__dirname, '..', '..', '..', '..', 'news_dataset.json'));
+  const read = fs.createReadStream(path.join(__dirname, '..', '..', '..', '..', 'data', 'news_dataset.json'));
   const rl = readline.createInterface({
     input: read,
   });

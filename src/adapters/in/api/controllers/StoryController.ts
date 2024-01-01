@@ -28,8 +28,6 @@ export class StoryController implements interfaces.Controller {
     });
   }
 
-  // todo create several endpoint for aggs from ELASTIC
-
   @httpGet('/search')
   async searchStories(
     @queryParam('search') search: string,
@@ -41,6 +39,11 @@ export class StoryController implements interfaces.Controller {
       take: Number.isSafeInteger(+take) ? +take : 50,
       skip: Number.isSafeInteger(+skip) ? +skip : 0,
     });
+  }
+
+  @httpGet('/statistics')
+  async getStatistics() {
+    return this.storyServicePort.getStatistics();
   }
 
   @httpGet('/:id')
