@@ -7,7 +7,11 @@ yarn install
 
 
 Generate migrations
-npm run typeorm migration:generate ./migrations/Name -- -d src/config/db/data-source.ts
+tsc
+npm run typeorm migration:generate ./src/migrations/Name -- -d dist/config/db/data-source.js
+Run migrations
+tsc
+yarn run typeorm:migrate
 
 
 docker compose up -d

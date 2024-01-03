@@ -1,5 +1,7 @@
 import {DataSource} from "typeorm";
 import {DATABASE} from "../env.js";
+import * as url from 'url';
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 export default new DataSource({
   type: "postgres",
@@ -10,9 +12,7 @@ export default new DataSource({
   database: DATABASE.DB,
   synchronize: false,
   logging: false,
-  // todo play here, js for prod, ts for dev
-  entities: ['./**/*.entity.{js}'],
+  entities: [__dirname + '../../**/*.entity.{ts,js}'],
   subscribers: [],
-  // todo play here, js for prod, ts for dev
-  migrations: ['./migrations/*.js'],
+  migrations: [__dirname + '../../migrations/*.{ts,js}'],
 });
