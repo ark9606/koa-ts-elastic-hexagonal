@@ -1,6 +1,6 @@
-import {AuthorEntity} from "./Author.entity";
-import {DBPort} from "../ports/DBPort";
-import {StoryEntity} from "../story/Story.entity";
+import {AuthorEntity} from "./Author.entity.js";
+import {DBPort} from "../ports/DBPort.js";
+import {StoryEntity} from "../story/Story.entity.js";
 
 export class AuthorModel extends AuthorEntity {
 

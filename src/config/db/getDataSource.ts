@@ -1,4 +1,4 @@
-import ds from './data-source';
+import ds from './data-source.js';
 import {DataSource} from "typeorm";
 
 export const createDataSource = async (): Promise<DataSource> => {

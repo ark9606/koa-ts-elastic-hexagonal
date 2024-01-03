@@ -1,17 +1,17 @@
 import {inject, injectable} from "inversify";
-import {DI_TOKEN} from "../../../../config/injections/di-tokens";
-import {DBPort} from "../../../ports/DBPort";
+import {DI_TOKEN} from "../../../../config/injections/di-tokens.js";
+import {DBPort} from "../../../ports/DBPort.js";
 import {
   GetStoriesListInput,
   GetStoriesListOutput,
   GetStoryOutput,
   SearchStoriesInput,
   StoryServicePort
-} from "../../port/StoryServicePort";
-import {FindOptionsWhere} from "typeorm/find-options/FindOptionsWhere";
-import {StoryEntity} from "../../Story.entity";
+} from "../../port/StoryServicePort.js";
+import {FindOptionsWhere} from "typeorm/find-options/FindOptionsWhere.js";
+import {StoryEntity} from "../../Story.entity.js";
 import {ILike, Like} from "typeorm";
-import {ElasticPort} from "../../../ports/ElasticPort";
+import {ElasticPort} from "../../../ports/ElasticPort.js";
 
 @injectable()
 export class StoryService implements StoryServicePort {

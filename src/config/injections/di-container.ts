@@ -1,18 +1,18 @@
 import {Container} from "inversify";
 import {interfaces, TYPE} from "inversify-koa-utils";
-import {AuthorController} from "../../adapters/in/api/controllers/AuthorController";
-import {GetAuthorsListPort} from "../../core/author/port/GetAuthorsListPort";
-import {DI_TOKEN} from "./di-tokens";
-import {GetAuthorsListUseCase} from "../../core/author/app/useCases/GetAuthorsListUseCase";
-import {DBPort} from "../../core/ports/DBPort";
-import {DBAdapter} from "../../adapters/out/persistence/DBAdapter";
-import {StoryService} from "../../core/story/app/services/StoryService";
-import {StoryServicePort} from "../../core/story/port/StoryServicePort";
-import {StoryController} from "../../adapters/in/api/controllers/StoryController";
-import {CreateStoryByAuthorUseCase} from "../../core/author/app/useCases/CreateStoryByAuthorUseCase";
-import {CreateStoryByAuthorPort} from "../../core/author/port/CreateStoryByAuthorPort";
-import {ElasticPort} from "../../core/ports/ElasticPort";
-import {ElasticAdapter} from "../../adapters/out/persistence/ElasticAdapter";
+import {AuthorController} from "../../adapters/in/api/controllers/AuthorController.js";
+import {GetAuthorsListPort} from "../../core/author/port/GetAuthorsListPort.js";
+import {DI_TOKEN} from "./di-tokens.js";
+import {GetAuthorsListUseCase} from "../../core/author/app/useCases/GetAuthorsListUseCase.js";
+import {DBPort} from "../../core/ports/DBPort.js";
+import {DBAdapter} from "../../adapters/out/persistence/DBAdapter.js";
+import {StoryService} from "../../core/story/app/services/StoryService.js";
+import {StoryServicePort} from "../../core/story/port/StoryServicePort.js";
+import {StoryController} from "../../adapters/in/api/controllers/StoryController.js";
+import {CreateStoryByAuthorUseCase} from "../../core/author/app/useCases/CreateStoryByAuthorUseCase.js";
+import {CreateStoryByAuthorPort} from "../../core/author/port/CreateStoryByAuthorPort.js";
+import {ElasticPort} from "../../core/ports/ElasticPort.js";
+import {ElasticAdapter} from "../../adapters/out/persistence/ElasticAdapter.js";
 
 export const container = new Container();
 

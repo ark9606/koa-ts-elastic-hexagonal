@@ -1,9 +1,8 @@
 import {controller, httpGet, httpPost, interfaces, queryParam, requestParam} from "inversify-koa-utils";
 import {inject, injectable} from "inversify";
-import {DI_TOKEN} from "../../../../config/injections/di-tokens";
-import {GetAuthorsListPort} from "../../../../core/author/port/GetAuthorsListPort";
+import {DI_TOKEN} from "../../../../config/injections/di-tokens.js";
 import "reflect-metadata";
-import {StoryServicePort} from "../../../../core/story/port/StoryServicePort";
+import {StoryServicePort} from "../../../../core/story/port/StoryServicePort.js";
 
 @controller('/stories')
 @injectable()

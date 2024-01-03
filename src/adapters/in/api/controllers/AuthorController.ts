@@ -1,10 +1,9 @@
 import {controller, httpGet, httpPost, interfaces, requestBody, requestParam} from "inversify-koa-utils";
 import {inject, injectable} from "inversify";
-import {DI_TOKEN} from "../../../../config/injections/di-tokens";
-import {GetAuthorsListPort} from "../../../../core/author/port/GetAuthorsListPort";
+import {DI_TOKEN} from "../../../../config/injections/di-tokens.js";
+import {GetAuthorsListPort} from "../../../../core/author/port/GetAuthorsListPort.js";
 import "reflect-metadata";
-import * as Koa from 'koa';
-import {CreateStoryByAuthorPort} from "../../../../core/author/port/CreateStoryByAuthorPort";
+import {CreateStoryByAuthorPort} from "../../../../core/author/port/CreateStoryByAuthorPort.js";
 
 @controller('/authors')
 @injectable()

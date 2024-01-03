@@ -1,4 +1,4 @@
-import {CreateStoryByAuthorUseCase} from "../../core/author/app/useCases/CreateStoryByAuthorUseCase";
+import {CreateStoryByAuthorUseCase} from "../../core/author/app/useCases/CreateStoryByAuthorUseCase.js";
 
 export const DI_TOKEN = {
   GetAuthorsListUseCase: Symbol.for("GetAuthorsListUseCase"),

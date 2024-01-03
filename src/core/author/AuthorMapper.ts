@@ -1,6 +1,6 @@
-import {AuthorEntity} from "./Author.entity";
-import {AuthorModel} from "./Author.model";
-import {DBPort} from "../ports/DBPort";
+import {AuthorEntity} from "./Author.entity.js";
+import {AuthorModel} from "./Author.model.js";
+import {DBPort} from "../ports/DBPort.js";
 
 export class AuthorMapper {
   public static toModel(entity: AuthorEntity, dbPort: DBPort): AuthorModel {

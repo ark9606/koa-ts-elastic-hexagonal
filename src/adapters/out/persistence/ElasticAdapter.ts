@@ -1,9 +1,7 @@
 import {injectable} from "inversify";
-import {ElasticPort, SearchStoriesInput} from "../../../core/ports/ElasticPort";
+import {ElasticPort, SearchStoriesInput} from "../../../core/ports/ElasticPort.js";
 import {Client} from "@elastic/elasticsearch";
-import {StoryEntity} from "../../../core/story/Story.entity";
-import {th} from "@faker-js/faker";
-
+import {StoryEntity} from "../../../core/story/Story.entity.js";
 
 
 

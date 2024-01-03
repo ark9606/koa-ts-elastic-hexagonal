@@ -1,16 +1,40 @@
+//{
+//  "extends": "@tsconfig/node20/tsconfig.json",
+//  "compilerOptions": {
+//    "outDir": "dist",
+//    "sourceMap": true,
+//    "strict": false,
+//    "experimentalDecorators": true,
+//    "emitDecoratorMetadata": true,
+//  },
+//  "include": ["./src/**/*"],
+//  "exclude": ["node_modules"]
+//}
+//
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es5",
-    "lib": ["es6"],
-    "sourceMap": true,
+    "rootDir": "./src",
     "outDir": "./dist",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "es2020",
+    "lib": ["es2020"],
+    "sourceMap": true,
     "types": ["reflect-metadata", "node"],
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
   },
   "include": [
     "./src/**/*"
-  ]
+  ],
+  "exclude": [
+    "node_modules", "dist"
+  ],
+  "ts-node": {
+    "esm": true,
+    "compiler": "typescript"
+  }
 }

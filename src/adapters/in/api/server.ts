@@ -1,8 +1,8 @@
-import * as logger from 'koa-logger';
-import * as json from 'koa-json';
-import * as bodyParser from 'koa-bodyparser';
+import logger from 'koa-logger';
+import json from 'koa-json';
+import bodyParser from 'koa-bodyparser';
 import { InversifyKoaServer} from "inversify-koa-utils";
-import {container} from "../../../config/injections/di-container";
+import {container} from "../../../config/injections/di-container.js";
 
 export function runServer() {
   // create server
@@ -12,6 +12,7 @@ export function runServer() {
       try {
         await next();
       } catch (err) {
+        console.error(err);
         // will only respond with JSON
         ctx.status = err.statusCode || err.status || 500;
         ctx.body = {

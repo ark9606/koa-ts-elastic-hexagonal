@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  nodeapp:
+    image: node:20.10.0-alpine
+    build:
+      context: .
+    env_file:
+      - .env
+    ports:
+      - '${PORT}:${PORT}'
+    expose:
+      - '${PORT}'
+

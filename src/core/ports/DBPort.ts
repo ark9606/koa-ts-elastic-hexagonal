@@ -1,7 +1,7 @@
 import {Repository} from "typeorm";
-import {AuthorEntity} from "../author/Author.entity";
-import {StoryEntity} from "../story/Story.entity";
-import {AuthorModel} from "../author/Author.model";
+import {AuthorEntity} from "../author/Author.entity.js";
+import {StoryEntity} from "../story/Story.entity.js";
+import {AuthorModel} from "../author/Author.model.js";
 
 export interface DBPort {
   getAuthorRepository(): Promise<Repository<AuthorEntity>>;

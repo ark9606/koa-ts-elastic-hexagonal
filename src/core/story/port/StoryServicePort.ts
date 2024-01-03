@@ -1,4 +1,4 @@
-import {StoryEntity} from "../Story.entity";
+import {StoryEntity} from "../Story.entity.js";
 
 export type GetStoriesListInput = {
   filter: string | undefined;

@@ -1,11 +1,11 @@
-import {DBPort} from "../../../core/ports/DBPort";
-import {getDataSource} from "../../../config/db/getDataSource";
+import {DBPort} from "../../../core/ports/DBPort.js";
+import {getDataSource} from "../../../config/db/getDataSource.js";
 import {Repository} from "typeorm";
-import {AuthorEntity} from "../../../core/author/Author.entity";
+import {AuthorEntity} from "../../../core/author/Author.entity.js";
 import {injectable} from "inversify";
-import {StoryEntity} from "../../../core/story/Story.entity";
-import {AuthorModel} from "../../../core/author/Author.model";
-import {AuthorMapper} from "../../../core/author/AuthorMapper";
+import {StoryEntity} from "../../../core/story/Story.entity.js";
+import {AuthorModel} from "../../../core/author/Author.model.js";
+import {AuthorMapper} from "../../../core/author/AuthorMapper.js";
 
 @injectable()
 export class DBAdapter implements DBPort {

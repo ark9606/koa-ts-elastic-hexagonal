@@ -1,4 +1,4 @@
-import {StoryEntity} from "../../story/Story.entity";
+import {StoryEntity} from "../../story/Story.entity.js";
 
 export type CreateStoryByAuthorOutput = StoryEntity;
 

@@ -1,5 +1,5 @@
 import {DataSource} from "typeorm";
-import {DATABASE} from "../env";
+import {DATABASE} from "../env.js";
 
 export default new DataSource({
   type: "postgres",
@@ -10,7 +10,9 @@ export default new DataSource({
   database: DATABASE.DB,
   synchronize: false,
   logging: false,
-  entities: ['./**/*.entity.{ts,js}'],
+  // todo play here, js for prod, ts for dev
+  entities: ['./**/*.entity.{js}'],
   subscribers: [],
-  migrations: ['./migrations/*.ts'],
+  // todo play here, js for prod, ts for dev
+  migrations: ['./migrations/*.js'],
 });

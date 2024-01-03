@@ -1,8 +1,8 @@
 import {inject, injectable} from "inversify";
-import {DI_TOKEN} from "../../../../config/injections/di-tokens";
-import {DBPort} from "../../../ports/DBPort";
-import {CreateStoryByAuthorOutput, CreateStoryByAuthorPort} from "../../port/CreateStoryByAuthorPort";
-import {ElasticPort} from "../../../ports/ElasticPort";
+import {DI_TOKEN} from "../../../../config/injections/di-tokens.js";
+import {DBPort} from "../../../ports/DBPort.js";
+import {CreateStoryByAuthorOutput, CreateStoryByAuthorPort} from "../../port/CreateStoryByAuthorPort.js";
+import {ElasticPort} from "../../../ports/ElasticPort.js";
 
 @injectable()
 export class CreateStoryByAuthorUseCase implements CreateStoryByAuthorPort {

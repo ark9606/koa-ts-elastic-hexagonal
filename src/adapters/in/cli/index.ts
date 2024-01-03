@@ -1,15 +1,15 @@
-import {AuthorEntity} from "../../../core/author/Author.entity";
+import {AuthorEntity} from "../../../core/author/Author.entity.js";
 import { faker } from '@faker-js/faker';
 import {Container} from "inversify";
-import {DBPort} from "../../../core/ports/DBPort";
-import {DI_TOKEN} from "../../../config/injections/di-tokens";
-import {DBAdapter} from "../../out/persistence/DBAdapter";
-import {getDataSource} from "../../../config/db/getDataSource";
-import {StoryEntity} from "../../../core/story/Story.entity";
-import {ElasticPort} from "../../../core/ports/ElasticPort";
-import {ElasticAdapter} from "../../out/persistence/ElasticAdapter";
+import {DBPort} from "../../../core/ports/DBPort.js";
+import {DI_TOKEN} from "../../../config/injections/di-tokens.js";
+import {DBAdapter} from "../../out/persistence/DBAdapter.js";
+import {getDataSource} from "../../../config/db/getDataSource.js";
+import {StoryEntity} from "../../../core/story/Story.entity.js";
+import {ElasticPort} from "../../../core/ports/ElasticPort.js";
+import {ElasticAdapter} from "../../out/persistence/ElasticAdapter.js";
 import {In} from "typeorm";
-import {chunkify} from "../../../core/common/utils/chunkify";
+import {chunkify} from "../../../core/common/utils/chunkify.js";
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
 import * as fs from 'fs';

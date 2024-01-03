@@ -1,7 +1,7 @@
-import {GetAuthorsListOutput, GetAuthorsListPort} from "../../port/GetAuthorsListPort";
+import {GetAuthorsListOutput, GetAuthorsListPort} from "../../port/GetAuthorsListPort.js";
 import {inject, injectable} from "inversify";
-import {DI_TOKEN} from "../../../../config/injections/di-tokens";
-import {DBPort} from "../../../ports/DBPort";
+import {DI_TOKEN} from "../../../../config/injections/di-tokens.js";
+import {DBPort} from "../../../ports/DBPort.js";
 
 @injectable()
 export class GetAuthorsListUseCase implements GetAuthorsListPort {

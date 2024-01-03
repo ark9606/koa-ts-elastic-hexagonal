@@ -4,7 +4,9 @@
   "description": "",
   "main": "src/main.ts",
   "scripts": {
-    "start-web:dev": "node -r ts-node/register --env-file=.env src/main.ts",
+    "build": "tsc",
+    "start-web:dev": "node --loader ts-node/esm --env-file=.env src/main.ts",
+    "start-web:prod": "node --env-file=.env dist/main.js",
     "start-cli:dev": "node -r ts-node/register --env-file=.env src/adapters/in/cli",
     "typeorm": "typeorm-ts-node-commonjs",
     "typeorm:migrate": "npm run typeorm migration:run -- -d src/config/db/data-source.ts"
@@ -12,6 +14,7 @@
   "engines": {
     "node": ">=20.0.0"
   },
+  "type": "module",
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -28,17 +31,17 @@
     "pg": "^8.11.3",
     "reflect-metadata": "^0.1.14",
     "typeorm": "^0.3.17",
+    "typescript": "^5.3.3",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
+    "@tsconfig/node20": "^20.1.2",
     "@types/koa": "^2.13.12",
     "@types/koa-json": "^2.0.23",
     "@types/koa-logger": "^3.1.5",
     "@types/koa-router": "^7.4.8",
     "@types/node": "^20.10.4",
     "nodemon": "^3.0.2",
-    "ts-node": "^10.9.2",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^5.3.3"
+    "ts-node": "^10.9.2"
   }
 }
