@@ -10,17 +10,21 @@ import {ElasticPort} from "../../../core/ports/ElasticPort.js";
 import {ElasticAdapter} from "../../out/persistence/ElasticAdapter.js";
 import {In} from "typeorm";
 import {chunkify} from "../../../core/common/utils/chunkify.js";
-const yargs = require('yargs/yargs')
-const { hideBin } = require('yargs/helpers')
+import yargs from 'yargs/yargs';
+import {hideBin} from 'yargs/helpers';
 import * as fs from 'fs';
 import * as path from "path";
 import * as readline from "readline";
+import url from "url";
 const argv = yargs(hideBin(process.argv)).argv;
 
 console.log('CLI adapter started');
 
 const generateAuthorsMode = argv.entity === 'author';
 const generateStoriesMode = argv.entity === 'story';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
 
 const container = new Container();
 container.bind<DBPort>(DI_TOKEN.DBAdapter).to(DBAdapter);

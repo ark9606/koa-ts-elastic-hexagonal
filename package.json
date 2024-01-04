@@ -7,7 +7,7 @@
     "build": "rm -rf ./dist & tsc",
     "start-web:dev": "node --loader ts-node/esm --env-file=.env src/main.ts",
     "start-web:prod": "node --env-file=.env dist/main.js",
-    "start-cli:dev": "node -r ts-node/register --env-file=.env src/adapters/in/cli",
+    "start-cli:dev": "node --loader ts-node/esm --env-file=.env src/adapters/in/cli/index.ts",
     "typeorm": "typeorm-ts-node-commonjs",
     "typeorm:migrate": "npm run typeorm migration:run -- -d dist/config/db/data-source.js"
   },
