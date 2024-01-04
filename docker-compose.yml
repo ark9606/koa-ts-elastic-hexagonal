@@ -2,13 +2,17 @@ version: '3.7'
 
 services:
   nodeapp:
-    image: node:20.10.0-alpine
     build:
       context: .
+      dockerfile: Dockerfile
     env_file:
       - .env
     ports:
       - '${PORT}:${PORT}'
+    environment:
+      PG_HOST: stories_db
+      PG_PORT: 5432
+      ELASTICSEARCH_URL: http://elasticsearch:9200
     expose:
       - '${PORT}'
   stories_db:
@@ -29,30 +33,33 @@ services:
     # to save data between restarts
     volumes:
       - postgresvol:/var/lib/postgresql/data
-    networks:
-      - stories_db
+#    networks:
+#      - stories_db
   elasticsearch:
     image: elasticsearch:8.11.3
     ports:
       - 9200:9200
-    networks:
-      - es_net
+#    networks:
+#      - es_net
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
+    volumes:
+      - esvol:/var/lib/esvol/data
   kibana:
     image: kibana:8.11.3
     ports:
       - 5601:5601
-    networks:
-      - es_net
+#    networks:
+#      - es_net
 
 
-networks:
-  es_net:
-  stories_db:
-    driver: bridge
+#networks:
+#  es_net:
+#  stories_db:
+#    driver: bridge
 
 
 volumes:
   postgresvol:
+  esvol:
