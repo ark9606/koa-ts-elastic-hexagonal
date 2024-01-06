@@ -1,24 +1,67 @@
 The focus of this project is to create an example of hexagonal architecture in TypeScript for backend application with usage of Elastic.
 Some concepts (validation, errors handling, security, ...) were intentionally skipped for simplicity of example.
 
+0. Setting up
+```
 npm install --global yarn
 yarn install
+```
+1. Start containers
+```
+docker compose up -d
+```
 
-
-
-Generate migrations
-tsc
-npm run typeorm migration:generate ./src/migrations/Name -- -d dist/config/db/data-source.js
-Run migrations
+2. Run migrations
+```
 tsc
 yarn run typeorm:migrate
+```
+
+Generating new migrations
+```
+tsc
+npm run typeorm migration:generate ./src/migrations/Name -- -d dist/config/db/data-source.js
+```
 
 
-docker compose up -d
-
-
-Generate authors with CLI:
+3. Generate authors with CLI:
+```
 yarn run start-cli:dev --entity=author --count=3
-
-Generate stories for all authors with CLI:
+```
+4. Generate stories for all authors with CLI:
+```
 yarn run start-cli:dev --entity=story
+```
+
+5. Start app locally
+```
+yarn run start-web:dev
+```
+### Load testing
+
+0. Install artillery:
+```
+yarn add artillery -g
+```
+
+1. Install datadog agent:
+https://app.datadoghq.eu/signup/agent#macos
+
+2. Run tests:
+start Datadog agent (usually starts at http://127.0.0.1:5002/)
+```
+datadog-agent run
+```
+start tests
+```
+artillery run tests/load/stories-load-test.yml
+```
+3. Results (https://app.datadoghq.eu/dashboard/lists)
+Dashboard with metrics:
+![dashboard](./docs/dashboard.png "Dashboard")
+
+Example of metric - tolerated, frustrated, satisfied requests:
+![metric1](./docs/metric1.png "Metric1")
+
+Example of metric - response time:
+![metric2](./docs/metric2.png "Metric2")

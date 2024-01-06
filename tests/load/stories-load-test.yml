@@ -1,0 +1,52 @@
+config:
+  target: http://localhost:3000
+  phases:
+    - duration: 30
+      # start with 1 virtual user
+      arrivalRate: 1
+      # increase users to 5 each second
+      rampTo: 5
+      name: Warm up phase
+    - duration: 45
+      arrivalRate: 5
+      rampTo: 10
+      name: Ramp up load
+    - duration: 20
+      arrivalRate: 10
+      rampTo: 15
+      name: Spike phase
+  # Load & configure a couple of useful plugins
+  # https://docs.art/reference/extensions
+  # TODO: add datadog agent
+  plugins:
+    ensure: {}
+    apdex: {}
+    metrics-by-endpoint: {}
+    publish-metrics:
+      # apiKey not set, so the plugin will assume that the agent is running:
+      - type: datadog
+        prefix: "artillery.publish_metrics_plugin."
+        tags:
+          - "testId:mytest123"
+          - "reporterType:datadog-agent"
+        event:
+          priority: low
+          tags:
+            - "testId:mytest123"
+  apdex:
+    threshold: 500
+  ensure:
+    thresholds:
+      - http.response_time.p99: 100
+      - http.response_time.p95: 75
+scenarios:
+  - name: 'Search for stories'
+    flow:
+      - loop:
+          - get:
+              url: "/authors"
+          - get:
+              url: "/stories?filter=trump donald&take=20&skip=0"
+          - get:
+              url: "/stories/search?search=trump donald&take=20&skip=0"
+        count: 5
