@@ -66,8 +66,10 @@ Example of metric - tolerated, frustrated, satisfied requests:
 Example of metric - response time:
 ![metric2](./docs/metric2.png "Metric2")
 
+Example of metric - avg response time from ElasticSearch (10 ms) and PostgresSQL (5.2k ms):
+![metric2](./docs/metric3.png "Metric3")
 
-Minikube:
+## Minikube:
 Install via ```brew install minikube```
 
 Run minikube
