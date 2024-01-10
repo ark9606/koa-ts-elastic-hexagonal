@@ -83,24 +83,59 @@ docker tag koa-ts-elastic-hexagonal-nodeapp:latest ark9606/koa-ts-elastic-hex-re
 docker push ark9606/koa-ts-elastic-hex-repo
 ```
 
-Create deployment
+Create ConfigMap `kubectl apply -f ./k8s/postgresql-config.yml`
+
+Create Secret `kubectl apply -f ./k8s/postgresql-secret.yml`
+
+Create DB (deployment + service) `kubectl apply -f ./k8s/postgresql.yml`
+
+Create Node.js app (deployment + service) `kubectl apply -f ./k8s/nodeapp.yml`
+
+Check all parts with
 ```
-kubectl apply -f ./k8s/deployments/stories-app.yml
+kubectl get all
+kubectl get configmap
+kubectl get secret
 ```
-Check deployment
+
+Check logs from pod `kubectl logs nodeapp-deployment-58c74f6f5d-kz6g2`
+
+Access to service via `minikube service --url nodeapp-service`
+
+OR
+
+List services to get the port of external service (NodePort from the output):
 ```
-kubectl get pods
-kubectl logs nodejs-deployment-d7485d79c-6ht54
+kubectl get service
 ```
-Expose the Pod to the public internet 
+
+Get IP of cluster to access the pod, via `minikube ip` or INTERNAL-IP from
 ```
-kubectl expose deployment nodejs-deployment --type=LoadBalancer --port=3000
+kubectl get node -o wide
 ```
-Check created service:
+
+To access the app, execute `minikube service --url nodeapp-service`
+
+Testing, got to http://127.0.0.1:64767 from `minikube service --url nodeapp-service`
+
+Visit next url:
+
+http://127.0.0.1:64767/ -> Not Found
+
+http://127.0.0.1:64767/authors -> {"message":"relation \"Author\" does not exist"} - means that connection is established, need to run the migrations
+
+Enter the pod and run migrations:
 ```
-kubectl get services
+kubectl exec --stdin --tty nodeapp-deployment-58c74f6f5d-rn4xf -- /bin/sh
+yarn run typeorm:migrate
 ```
-Run service:
-```
-minikube service nodejs-deployment
-```
+
+Run again `minikube service --url nodeapp-service`
+
+Visit http://127.0.0.1:64917
+
+Go to http://127.0.0.1:64767/authors -> [] - means that table is empty
+
+SUCCESS!
+
+Link: https://iteritory.com/deploy-node-js-application-in-local-minikube-kubernetes-cluster/
